@@ -1,0 +1,81 @@
+{% load static %}
+<div id="form-update-table"
+     class="fixed hidden left-0 top-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none backdrop-blur">
+    <div class="flex items-center pointer-events-none relative h-[calc(100%-1rem)] w-auto transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
+        <div class="pointer-events-auto relative flex max-h-[100%] w-full flex-col overflow-hidden rounded-xl border-none bg-white bg-clip-padding text-current shadow-lg">
+            <header id="close_modal_update"
+                    class="flex flex-col items-start border-b-2 border-neutral-100 border-opacity-100 p-4">
+                <h2 class="text-base font-semibold leading-7 text-gray-900">Chỉnh sửa</h2>
+                <p class="mt-1 text-sm leading-6 text-gray-600">Mọi lỗi lầm đều có thể sửa chữa, chỉ cần bạn biết
+                    sửa lỗi.</p>
+            </header>
+            <form action="{% url 'blog-update' blogs.slug %}" method="POST" enctype="multipart/form-data"
+                  class="flex max-h-[100%] w-full flex-col overflow-hidden">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.GET.next }}">
+                <main class="flex flex-col overflow-y-auto p-4">
+                    <div class="space-y-8">
+                        <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+                            <!-- Form -->
+                            <div class="sm:col-span-6">
+                                <label for="title" class="block text-sm font-medium text-gray-700">Tiêu đề</label>
+                                <div class="mt-1">
+                                    <input type="text" name="title" id="title" value="{{ blogs.title }}" required
+                                           class="shadow-sm focus:ring-slate-500 focus:border-slate-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-2">
+                                <label for="category" class="block text-sm font-medium leading-6 text-gray-900">Phân
+                                    loại</label>
+                                <div class="mt-2">
+                                    <select id="category" name="category" autocomplete="on"
+                                            class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                                        {#                                        <option value="{{ blogs.category }}">{{ blogs.category }}</option>#}
+                                        {% for category in categories %}
+                                            <option value="{{ category.name }}"
+                                                    {% if category.name == blogs.category.name %}selected{% endif %}>{{ category.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="sm:col-span-6">
+                                <label for="content" class="block text-sm font-medium text-gray-700">Nội
+                                    dung</label>
+                                <div class="mt-1">
+                                        <textarea name="content" id="content" rows="5" required
+                                                  class="shadow-sm focus:ring-slate-500 focus:border-slate-500 block w-full sm:text-sm border-gray-300 rounded-md">{{ blogs.content }}</textarea>
+                                </div>
+                            </div>
+
+                            <!-- End - Form -->
+                        </div>
+                    </div>
+                </main>
+                <footer class="flex justify-end gap-x-4 w-full border-t-2 border-neutral-100 border-opacity-100 px-4 py-2">
+                    <button type="submit" class="rounded-xl bg-slate-100 px-4 py-2 hover:bg-slate-200">
+                        <h1 class="font-semibold text-slate-800">Đăng tải</h1>
+                    </button>
+                </footer>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- EVENT MODAL UPLOAD -->
+<script>
+    $(document).ready(function () {
+        const $Btn = $('#updateBtn');
+        const $Menu = $('#form-update-table');
+        const $close = $('#close_modal_update');
+
+        $Btn.click(function () {
+            $Menu.removeClass('hidden');
+        });
+
+        $close.click(function () {
+            $Menu.addClass('hidden');
+        });
+    });
+</script>
+<!-- END - MODAL UPLOAD -->

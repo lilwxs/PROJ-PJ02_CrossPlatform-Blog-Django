@@ -1,0 +1,88 @@
+{% load static %}
+<!-- USER -->
+<div class="flex flex-col w-full gap-4 p-4 sm:flex-row items-center justify-between">
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <article class="w-12 h-12">
+            <img src="{{ blogs.user.avatar.url }}"
+                 class="w-full h-full object-cover object-center rounded-2xl"
+                 alt=""/>
+        </article>
+        <div class="flex flex-col items-center sm:items-start justify-center">
+            <h1 class="text-2xl font-bold text-gray-800">{{ blogs.user.get_full_name }}</h1>
+            <p class="text-xs text-gray-500 flex items-center gap-x-1">
+                <strong>Nghệ danh</strong><span>&conint;</span>
+                {{ blogs.user.artist }}
+                <span>&CenterDot;</span>
+                <strong>Ngày đăng tải:</strong>
+                {{ blogs.created_at|date:"d/m/Y" }}
+            </p>
+        </div>
+    </div>
+    <div class="flex flex-col items-center justify-center">
+        <div class="flex items-center gap-x-2">
+            {% if request.user.is_authenticated and request.user == blogs.user %}
+                <button id="updateBtn" class="flex items-center justify-center rounded-full bg-active/60 p-1 px-4 leading-5 drop-shadow-[0_0px_15px_rgba(0,0,0,0.05)] transition duration-200 hover:bg-active/80 hover:scale-105">
+                    <span class="text-xs font-semibold text-white">Chỉnh sửa</span>
+                </button>
+                <form
+                        method="POST"
+                        action="{% url 'blog-delete' blogs.slug %}"
+                        class="flex items-center justify-center rounded-full bg-white p-1 px-4 leading-5 drop-shadow-[0_0px_15px_rgba(0,0,0,0.05)] transition duration-200 hover:scale-105">
+                    {% csrf_token %}
+                    <button type="submit" class="text-xs font-semibold text-gray-800">Xoá bài
+                        viết
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<!-- END - USER -->
+<hr class="w-full"/>
+<!-- CONTENT -->
+<div class="flex flex-col items-start justify-center gap-y-2 p-4">
+    <h1 class="text-2xl font-bold text-gray-800">{{ blogs.title }}</h1>
+    <p class="text-sm text-gray-500">{{ blogs.content }}</p>
+</div>
+<!-- END - CONTENT -->
+<hr class="w-full"/>
+<!-- COMMENT -->
+<div class="flex flex-col gap-4 w-full h-auto py-6 px-4">
+    <!-- FORM COMMENT -->
+    <div class="flex items-center gap-x-3">
+        <div class="cursor-pointer">
+            <article class="flex h-10 w-10 items-center justify-center rounded-2xl shadow-sm"
+                     title="{{ request.user.get_full_name }}">
+                <img src="{{ request.user.avatar.url }}"
+                     class="object-cover object-center rounded-2xl"
+                     alt=""/>
+            </article>
+        </div>
+        <form method="POST" action="{% url 'comment-create' blogs.slug %}"
+              class="mr-2 relative w-full">
+            {% csrf_token %}
+            <label for="comment"
+                   class="flex h-10 w-full cursor-pointer items-center gap-x-2 rounded-2xl px-4 text-sm font-medium leading-5 text-slate-800 ring-1 ring-slate-900/10 backdrop-blur hover:bg-slate-100/80">
+                <lord-icon src="https://cdn.lordicon.com/hpivxauj.json" trigger="hover"
+                           colors="primary:#121331"
+                           class="h-5 w-5"></lord-icon>
+                <input class="w-full bg-transparent placeholder:text-gray-400 focus:outline-none"
+                       placeholder="Viết bình luận ..."
+                       name="content"
+                       id="comment"
+                />
+                <div class="absolute z-40 -right-4">
+                    <button type="submit"
+                            class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-red-500 shadow-sm hover:bg-red-400">
+                        <img src="{% static 'icons/sent.svg' %}" class="h-4 w-4" alt=""/>
+                    </button>
+                </div>
+            </label>
+        </form>
+    </div>
+    <!-- END - FORM COMMENT -->
+    <!-- LIST COMMENT -->
+    {% include 'common/_blog/partials/_comment.html' %}
+    <!-- END - LIST COMMENT -->
+</div>
+<!-- END - COMMENT -->

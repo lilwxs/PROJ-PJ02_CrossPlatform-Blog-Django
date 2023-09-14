@@ -1,0 +1,26 @@
+{% if form.errors %}
+    <div class="fixed top-6 right-4">
+        <div class="flex flex-col gap-y-2">
+            {% for field, errors in form.errors.items %}
+                <div class="bg-white rounded-xl px-4 py-2">
+                    <p class="text-sm font-semibold text-red-500">
+                        {% for error in errors %}
+                            {{ field }}:
+                            {{ error }}
+                        {% endfor %}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+{% if messages %}
+    {% for message in messages %}
+        <script>
+            $(document).ready(function () {
+                // This code will run when the document is ready
+                alert("{{ message }}");
+            });
+        </script>
+    {% endfor %}
+{% endif %}

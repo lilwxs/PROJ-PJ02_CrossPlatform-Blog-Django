@@ -1,0 +1,42 @@
+{% extends '_auth_base.html' %}
+{% load static %}
+{% block title %}DevWxs | Blogs{% endblock %}
+{% block ingredient %}
+    <div class="fixed left-0 top-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-slate-50">
+        <div class="flex items-center pointer-events-none relative h-[calc(100%-1rem)] w-auto transition-all duration-300 min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
+            <div class="pointer-events-auto relative flex max-h-[100%] w-full flex-col overflow-hidden rounded-xl border-none bg-white bg-clip-padding text-current shadow-lg">
+                <header class="flex items-center justify-between border-b-2 border-neutral-100 border-opacity-100 p-4">
+                    <h1 class="font-semibold text-slate-800">Đăng nhập</h1>
+                    <a href="{% url 'home' %}" class="flex items-center rounded-full p-2 hover:bg-slate-100">
+                        <lord-icon src="https://cdn.lordicon.com/nhfyhmlt.json" trigger="hover"
+                                   class="h-5 w-5"></lord-icon>
+                    </a>
+                </header>
+                <form class="flex max-h-[100%] w-full flex-col overflow-hidden" action="{% url 'login' %}"
+                      method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                    {% include '_error.html' %}
+                    <main class="flex flex-col gap-y-4 overflow-y-auto p-4">
+                        <div class="mt-4 space-y-6 sm:mx-auto sm:w-full sm:max-w-md">
+                            <!-- Form -->
+                            {% include '_form_snippets.html' with login='login' %}
+                            <!-- End - Form -->
+                            <p class="mt-10 text-center text-sm text-gray-500">
+                                Bạn chưa có tài khoản?
+                                <a href="{% url 'register' %}"
+                                   class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Đăng ký
+                                    ngay</a>
+                            </p>
+                        </div>
+                    </main>
+                    <footer class="flex justify-end w-full border-t-2 border-neutral-100 border-opacity-100 px-4 py-2">
+                        <button type="submit" class="rounded-xl bg-slate-100 px-4 py-2 hover:bg-slate-200">
+                            <h1 class="font-semibold text-slate-800">Đăng Nhập</h1>
+                        </button>
+                    </footer>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

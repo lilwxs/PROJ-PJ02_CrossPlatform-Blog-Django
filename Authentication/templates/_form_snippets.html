@@ -1,0 +1,133 @@
+{% if first_name %}
+    <div class="sm:col-span-3">
+        <label for="first_name"
+               class="block text-sm font-medium leading-6 text-gray-900">Tên của bạn</label>
+        <div class="mt-2">
+            <input type="text" name="first_name" id="first_name"
+                   autocomplete="off"
+                   placeholder="Nhập tên của bạn"
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+        </div>
+    </div>
+{% endif %}
+{% if last_name %}
+    <div class="sm:col-span-3">
+        <label for="last_name"
+               class="block text-sm font-medium leading-6 text-gray-900">Họ của bạn</label>
+        <div class="mt-2">
+            <input type="text" name="last_name" id="last_name"
+                   autocomplete="off"
+                   placeholder="Nhập họ của bạn"
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+        </div>
+    </div>
+{% endif %}
+{% if username %}
+    <div class="sm:col-span-4">
+        <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Tên
+            người dùng</label>
+        <div class="mt-2">
+            <input id="username" name="username" type="text" autocomplete="off"
+                   placeholder="eg. devwxs"
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+        </div>
+    </div>
+{% endif %}
+{% if gender %}
+    <div class="sm:col-span-2">
+        <label for="gender" class="block text-sm font-medium leading-6 text-gray-900">Giới
+            tính</label>
+        <div class="mt-2">
+            <select id="gender" name="gender" autocomplete="on"
+                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:max-w-xs sm:text-sm sm:leading-6">
+                <option value="0">Nam</option>
+                <option value="1">Nữ</option>
+                <option value="2">Khác</option>
+            </select>
+        </div>
+    </div>
+{% endif %}
+{% if email %}
+    <div class="col-span-full">
+        <label for="email"
+               class="block text-sm font-medium leading-6 text-gray-900">Địa chỉ
+            email</label>
+        <div class="mt-2">
+            <input type="email" name="email" id="email"
+                   autocomplete="off"
+                   placeholder="eg. devwxs@uda.vn"
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+        </div>
+    </div>
+{% endif %}
+{% if birthday %}
+    <div class="sm:col-span-5">
+        <label for="birthday" class="block text-sm font-medium leading-6 text-gray-900">Ngày
+            sinh</label>
+        <div class="mt-2">
+            <input id="birthday" name="birthday" type="date" autocomplete="off"
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+        </div>
+    </div>
+{% endif %}
+{% if password %}
+    <div class="sm:col-span-3">
+        <label for="password"
+               class="block text-sm font-medium leading-6 text-gray-900">Mật khẩu</label>
+        <div class="mt-2">
+            <input type="password" name="password" id="password"
+                   autocomplete="off"
+                   placeholder="Nhập mật khẩu của bạn"
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+        </div>
+    </div>
+{% endif %}
+{% if confirm_password %}
+    <div class="sm:col-span-3">
+        <label for="confirm_password"
+               class="block text-sm font-medium leading-6 text-gray-900">Mật
+            khẩu (Nhập lại)</label>
+        <div class="mt-2">
+            <input type="password" name="confirm_password" id="confirm_password"
+                   autocomplete="off"
+                   placeholder="Nhập lại mật khẩu của bạn"
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+        </div>
+    </div>
+{% endif %}
+
+{#LOGIN#}
+{% if login %}
+    <div>
+        <label for="email_or_username"
+               class="block text-sm font-medium leading-6 text-gray-900">Username Or
+            Email</label>
+        <div class="mt-2">
+            <input id="email_or_username" name="OneEmailOrUsername" type="text"
+                   autocomplete="off"
+                   required
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+    </div>
+    <div>
+        <div class="flex items-center justify-between">
+            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Mật
+                khẩu</label>
+            <div class="text-sm">
+                <a href="{% url 'password_reset' %}"
+                   class="font-semibold text-indigo-600 hover:text-indigo-500">Quên mật
+                    khẩu?</a>
+            </div>
+        </div>
+        <div class="mt-2">
+            <input id="password" name="password" type="password" autocomplete="current-password"
+                   required
+                   class="block w-full rounded-md border-0 py-2 text-gray-900 font-semibold bg-transparent shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+        </div>
+        <div class="text-sm">
+            <a href="{% url 'social:begin' 'google-oauth2' %}"
+               class="font-semibold text-indigo-600 hover:text-indigo-500">Đăng nhập bằng Google</a>
+        </div>
+    </div>
+{% endif %}
+

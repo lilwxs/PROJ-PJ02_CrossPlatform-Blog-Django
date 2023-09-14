@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    {% include 'inc/head.html' %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body class="bg-slate-50 antialiased">
+<div class="flex h-screen max-w-none flex-col">
+    <!-- HEADER -->
+    <div class="flex flex-grow overflow-auto">
+        <!-- SIDEBAR NAVBAR -->
+        {% if 'blog' in request.resolver_match.view_name or 'podcast' in request.resolver_match.view_name or 'profile' in request.resolver_match.view_name %}
+        {% else %}
+            {% include 'inc/_inc_sidebar_navbar.html' %}
+        {% endif %}
+        <!-- END SIDEBAR NAVBAR-->
+        <div class="flex-1 overflow-auto">
+            <!-- HEADER -->
+            {% if 'blog' in request.resolver_match.view_name or 'podcast' in request.resolver_match.view_name or 'profile' in request.resolver_match.view_name %}
+                {% include 'inc/inc-header-compact.html' %}
+            {% else %}
+                {% include 'inc/inc-header.html' %}
+            {% endif %}
+            <!-- END HEADER -->
+            <main class="flex h-full w-full justify-center">
+                <div class="mx-auto w-full px-5 lg:px-8">
+                    <div class="flex w-full h-full justify-center">
+                        {% block ingredient %}{% endblock %}
+                    </div>
+                </div>
+            </main>
+        </div>
+        <!-- SIDEBAR USER -->
+        {% if 'blog' in request.resolver_match.view_name or 'podcast' in request.resolver_match.view_name or 'profile' in request.resolver_match.view_name %}
+        {% else %}
+            {% include 'inc/_inc_sidebar_user.html' %}
+        {% endif %}
+        <!-- END SIDEBAR USER -->
+    </div>
+</div>
+</body>
+</html>

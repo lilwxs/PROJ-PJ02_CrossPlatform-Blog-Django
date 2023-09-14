@@ -1,0 +1,81 @@
+{% load static %}
+<div class="flex flex-col gap-y-4 mx-4 my-6">
+    {% for comment in blogs.comments.all %}
+        <div class="flex w-full h-auto space-x-2">
+            <img
+                    src="{{ comment.user.avatar.url }}"
+                    alt=""
+                    class="h-8 w-8 rounded-full"
+            />
+            <div class="group w-full h-auto flex flex-col items-start">
+                <div class="w-full h-auto flex items-center">
+                    <div class="flex flex-col rounded-2xl bg-slate-50 p-2 text-sm">
+                        <span class="block font-semibold">{{ comment.user.get_full_name }}</span>
+                        <p>{{ comment.content }}</p>
+                    </div>
+                    <div class="relative h-20 w-20 flex items-center">
+                        <div class="hidden cursor-pointer group-hover:inline-block">
+                            {% if request.user.is_authenticated and request.user == comment.user %}
+                                <form method="POST" action="{% url 'comment-delete' comment.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">
+                                        <img src="{% static 'icons/delete.svg' %}" class="h-4 w-4" alt=""/>
+                                    </button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="mx-2 text-xs text-gray-500">
+                    <span class="cursor-pointer font-semibold">Thích</span>
+                    <span>&CenterDot;</span>
+                    <button onclick="document.getElementById('reply-form-{{ comment.id }}').style.display = 'block'"
+                            class="font-semibold">{{ comment.replies.count }} Trả lời
+                    </button>
+                    <span>&CenterDot;</span>
+                    {{ comment.created_at }}
+                </div>
+                <div>
+                    {% include 'common/_blog/partials/_reply.html' %}
+                    <div class="hidden" id="reply-form-{{ comment.id }}">
+                        <div class="flex items-center gap-x-2">
+                            <div class="cursor-pointer">
+                                <article class="flex h-6 w-6 items-center justify-center rounded-2xl shadow-sm"
+                                         title="{{ request.user.get_full_name }}">
+                                    <img src="{{ request.user.avatar.url }}"
+                                         class="object-cover object-center rounded-2xl"
+                                         alt=""/>
+                                </article>
+                            </div>
+                            <form method="POST" action="{% url 'reply-create' comment.id %}"
+                                  class="mr-2 relative w-full">
+                                {% csrf_token %}
+                                <label for="reply"
+                                       class="flex h-8 w-full cursor-pointer items-center gap-x-2 rounded-2xl px-4 text-xs font-medium leading-4 text-slate-800 ring-1 ring-slate-900/10 backdrop-blur hover:bg-slate-100/80">
+                                    <lord-icon src="https://cdn.lordicon.com/hpivxauj.json" trigger="hover"
+                                               colors="primary:#121331"
+                                               class="h-5 w-5"></lord-icon>
+                                    <input class="w-full bg-transparent placeholder:text-gray-400 focus:outline-none"
+                                           placeholder="Viết bình luận ..."
+                                           name="content"
+                                           id="reply"
+                                    />
+                                    <div class="absolute z-40 -right-4">
+                                        <button type="submit"
+                                                class="flex h-8 w-8 cursor-pointer items-center justify-center rounded-xl bg-red-500 shadow-sm hover:bg-red-400">
+                                            <img src="{% static 'icons/sent.svg' %}" class="h-4 w-4" alt=""/>
+                                        </button>
+                                    </div>
+                                </label>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- END - FORM REPLY -->
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+
+

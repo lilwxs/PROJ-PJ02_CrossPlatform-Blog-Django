@@ -1,0 +1,38 @@
+{% load static %}
+<div class="w-full bg-white rounded-3xl drop-shadow-[0_0px_15px_rgba(0,0,0,0.04)] border-y">
+    <div class="my-6 mx-4">
+        <h2 class="text-md text-gray-700 font-bold hover:underline">
+            <a href="#">{{ title }}</a>
+        </h2>
+    </div>
+    <div class="flex flex-col mx-4 mb-6">
+        {% for podcast in podcast_list %}
+            {% if podcast != current_podcast %}
+
+                <a href="{% url 'podcast-detail' podcast.slug %}"
+                   class="flex items-center gap-x-4 rounded-xl hover:bg-active/20 p-2 cursor-pointer">
+                    <div class="group relative overflow-hidden rounded-xl h-20 w-20">
+                        <!-- Image -->
+                        <div class="h-full w-full">
+                            <img class="object-cover object-center w-full h-full pointer-events-none group-hover:scale-105 transition duration-200"
+                                 src="{{ podcast.image.url }}"
+                                 alt=""/>
+                        </div>
+                        <!-- Button -->
+                        <button
+                                class="bg-active/50 hover:bg-active/90 absolute bottom-4 right-4 flex h-10 w-10 translate-y-3 cursor-auto items-center justify-center rounded-full opacity-0 shadow-xl duration-200 hover:scale-105 group-hover:translate-y-0 group-hover:opacity-100"
+                        >
+                            <img class="h-4 w-4" src="{% static 'icons/music.svg' %}" alt=""/>
+                        </button>
+                    </div>
+                    <div class="flex flex-col items-start justify-center">
+                        <h1 class="text-md text-gray-700 font-bold hover:underline">
+                            {{ podcast.title }}
+                        </h1>
+                        <p class="text-sm text-gray-500">{{ podcast.types }}</p>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

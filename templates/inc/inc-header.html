@@ -1,0 +1,212 @@
+{% load static %}
+{% include 'inc/_search_input.html' %}
+<!-- HEADER -->
+<header class="sticky top-0 z-10 w-full backdrop-blur transition-colors duration-500">
+    <!-- CONTEXT HEADER -->
+    <div class="relative mx-2 gap-x-4 flex h-[4rem] items-center border-b border-slate-900/10 lg:mx-0 lg:border-0 lg:px-8">
+        <!-- LOGO -->
+        <a href="{% url 'home' %}" class="lg:hidden mr-2 flex items-center gap-x-2">
+            <img src="{% static 'images/Logo.ico' %}" alt="" class="h-10 w-10"/>
+            <span class="font-Rancho text-xl font-medium text-gray-900">DevWxs | Blogs</span>
+        </a>
+        <!-- END - LOGO -->
+        <!-- BUTTON -->
+        <div class="flex items-center gap-x-2 text-sm font-semibold leading-6 text-slate-700">
+            <!-- CONTEXT 1 -->
+            <button class="hover:bg-active hidden h-8 cursor-auto items-center justify-center rounded-full bg-black/80 p-1 px-4 transition duration-200 hover:scale-105 sm:flex">
+                <span class="text-sm font-semibold text-white">Dành cho bạn</span>
+            </button>
+            <!-- END - CONTEXT 1 -->
+            <!-- CONTEXT 2 -->
+            <button class="bg-active hidden h-8 cursor-auto items-center justify-center rounded-full p-1 px-4 transition duration-200 hover:scale-105 sm:flex">
+                <span class="text-sm font-semibold text-white">Theo dõi</span>
+            </button>
+            <!-- END - CONTEXT 2 -->
+            <!-- SEARCH BTN -->
+            <button id="searchBtn" class="h-8 w-8 hidden lg:flex items-center justify-center cursor-auto rounded-full p-1 ring-1 ring-slate-200 transition duration-200 hover:scale-105">
+                <lord-icon src="https://cdn.lordicon.com/xfftupfv.json" trigger="hover"
+                           class="h-4 w-4"></lord-icon>
+            </button>
+            <!-- END - SEARCH BTN -->
+        </div>
+        <!-- END - BUTTON -->
+        <!-- NOTIFICATION MOBILE REPONSIVE -->
+        <div class="-my-1 lg:hidden">
+            <button type="button" class="flex items-center justify-center text-slate-500 hover:text-slate-600">
+                <span class="sr-only">Notification</span>
+                <lord-icon src="https://cdn.lordicon.com/psnhyobz.json" trigger="hover" class="h-6 w-6"></lord-icon>
+                <span class="flex h-4 w-4 items-center justify-center rounded-full bg-indigo-400/10 p-0.5 text-xs font-medium leading-4 text-indigo-600">1</span>
+            </button>
+        </div>
+        <!-- END - NOTIFICATION MOBILE REPONSIVE -->
+        <!-- RIGHT NAVBAR -->
+        <div class="relative ml-auto hidden items-center lg:flex">
+            <nav class="text-sm font-semibold leading-6 text-slate-700">
+                <ul class="flex items-center space-x-4">
+                    <li>
+                        <a href="{% url 'about' %}" class="flex items-center gap-2 hover:text-red-500">
+                            <lord-icon src="https://cdn.lordicon.com/tyvtvbcy.json" trigger="loop"
+                                       colors="primary:#121331" class="h-6 w-6"></lord-icon>
+                            Giới thiệu
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center gap-2 hover:text-red-500">
+                            <lord-icon src="https://cdn.lordicon.com/icxqolmx.json" trigger="hover"
+                                       colors="primary:#121331" class="h-6 w-6"></lord-icon>
+                            Bản xếp hạng
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="flex items-center gap-x-4 ml-4 border-l border-slate-200">
+                {% if request.user.is_authenticated %}
+                    <!-- NOTIFICATION -->
+                    <button class="flex items-center justify-center ml-4 text-slate-500 hover:text-slate-600">
+                        <span class="sr-only">Notification</span>
+                        <lord-icon src="https://cdn.lordicon.com/psnhyobz.json" trigger="hover"
+                                   class="h-5 w-5"></lord-icon>
+                        <span class="flex h-4 w-4 items-center justify-center rounded-full bg-indigo-400/10 p-0.5 text-xs font-medium leading-4 text-indigo-600">1</span>
+                    </button>
+                    <!-- END - NOTIFICATION -->
+                    <!-- ADMIN -->
+                    {% if request.user.is_superuser %}
+                        <button class="h-8 cursor-auto flex items-center justify-center rounded-full bg-black/90 p-1 px-4 transition duration-200 hover:scale-105">
+                            <span class="text-sm font-semibold text-white">Quản lý</span>
+                        </button>
+                    {% endif %}
+                    <!-- END - ADMIN -->
+                    <!-- UPLOAD -->
+                    <div class="relative">
+                        <!-- BUTTON -->
+                        <button class="h-8 cursor-auto flex items-center justify-center rounded-full bg-black/90 p-1 px-4 transition duration-200 hover:scale-105"
+                                onclick="toggleTable(event, 'form-create-table')">
+                            <span class="text-sm font-semibold text-white">Tạo bài viết</span>
+                        </button>
+                        <!-- TABLE -->
+                        <div id="form-create-table" class="absolute hidden -right-4 top-10 w-screen max-w-max px-4">
+                            <div class="bg-white rounded-xl min-w-[14rem] drop-shadow-[0_0px_15px_rgba(0,0,0,0.04)] p-4 overflow-hidden">
+                                <div class="text-slate-700 text-sm font-semibold">
+                                    <a href="{% url 'blog_create' %}"
+                                       class="px-4 py-2 flex items-center rounded-lg hover:bg-gray-100"><h1
+                                            class="font-bold">Tạo Blog</h1></a>
+                                    <a href="{% url 'podcast_create' %}"
+                                       class="px-4 py-2 flex items-center rounded-lg hover:bg-gray-100"><h1
+                                            class="font-bold">Tạo Playlist</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END - UPLOAD -->
+                    <!-- USER -->
+                    <div class="relative ">
+                        <!-- BUTTON -->
+                        <button class="h-8 w-8 cursor-auto rounded-full bg-black p-1 transition duration-200 hover:scale-105"
+                                onclick="toggleTable(event, 'user-table')" title="{{ request.user.get_full_name }}">
+                            <div class="aspect-w-1 aspect-h-1">
+                                <img
+                                        class="pointer-events-none rounded-full object-cover"
+                                        src="{{ request.user.avatar.url }}"
+                                        alt=""
+                                />
+                            </div>
+                        </button>
+                        <!-- TABLE -->
+                        <div id="user-table" class="absolute hidden -right-4 top-10 w-screen max-w-max px-4">
+                            <div class="bg-white rounded-xl min-w-[14rem] drop-shadow-[0_0px_15px_rgba(0,0,0,0.04)] p-4 overflow-hidden">
+                                <div class="text-slate-700 text-sm font-semibold">
+                                    <a href="{% url 'profile' request.user.username %}" class="px-4 py-2 flex items-center hover:underline">
+                                        <h1 class="font-bold">{{ request.user.get_full_name }}</h1></a>
+                                    <a href="{% url 'password_change' %}" class="px-4 py-2 flex items-center rounded-lg hover:bg-gray-100"><h1
+                                            class="font-semibold">Đổi mật khẩu</h1></a>
+                                    <a href="{% url 'logout' %}" class="px-4 py-2 flex items-center hover:text-active">
+                                        <h1 class="font-semibold">Đăng xuất</h1></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END - USER -->
+                {% else %}
+                    <!-- LOGIN -->
+                    <a href="{% url 'login' %}"
+                       class="ml-4 h-8 cursor-pointer flex gap-x-2 items-center justify-center rounded-full bg-black/90 p-1 px-4 transition duration-200 hover:scale-105">
+                        <span class="text-sm font-semibold text-white">Đăng nhập</span>
+                        <lord-icon src="https://cdn.lordicon.com/ifqmqwui.json" trigger="hover" colors="primary:#ffffff"
+                                   class="h-5 w-5"></lord-icon>
+                    </a>
+                    <!-- END - LOGIN -->
+                {% endif %}
+
+            </div>
+        </div>
+        <!-- END - RIGHT NAVBAR -->
+        <!-- MOBILE -->
+        <button id="ic_searchBtn" type="button"
+                class="-my-1 ml-auto flex h-8 w-8 items-center justify-center text-slate-500 hover:text-slate-600 lg:hidden">
+            <span class="sr-only">Search</span>
+            <lord-icon src="https://cdn.lordicon.com/xfftupfv.json" trigger="hover" class="h-6 w-6"></lord-icon>
+        </button>
+        <div class="relative -my-1 ml-2 lg:hidden">
+            <button id="dropdown_settingBtn" type="button"
+                    class="flex h-8 w-8 items-center justify-center text-slate-500 hover:text-slate-600">
+                <lord-icon src="https://cdn.lordicon.com/hwuyodym.json" trigger="hover" class="h-6 w-6"></lord-icon>
+            </button>
+        </div>
+        <!-- END - MOBILE -->
+    </div>
+    <!-- END - CONTEXT HEADER -->
+    <!-- MOBILE HEADER REPINSIVE -->
+    <div class="flex items-center border-b border-slate-900/10 p-4 lg:hidden">
+        <button id="sidebar_leftBtn" type="button" class="flex items-center text-slate-500 hover:text-slate-600">
+            <lord-icon src="https://cdn.lordicon.com/ofwpzftr.json" trigger="hover" class="h-6 w-6"></lord-icon>
+        </button>
+        <ol class="ml-4 flex min-w-0 whitespace-nowrap text-sm leading-6">
+            <li class="flex items-center">
+                Trang cá nhân
+                <svg width="3" height="6" aria-hidden="true" class="mx-3 overflow-visible text-slate-400">
+                    <path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5"
+                          stroke-linecap="round"></path>
+                </svg>
+            </li>
+            <li class="truncate font-semibold text-slate-900">Chỉnh sửa thông tin</li>
+        </ol>
+    </div>
+    <!-- END - MOBILE HEADER REPINSIVE -->
+</header>
+<!-- END HEADER -->
+<script>
+    // Biến để theo dõi bảng đang được mở
+    let openTable = null;
+
+    // Hiển thị bảng khi click vào avatar hoặc form-create
+    function toggleTable(event, tableId) {
+        let table = document.getElementById(tableId);
+
+        // Kiểm tra xem bảng được nhấp vào có đang mở hay không
+        if (openTable === table) {
+            table.classList.add("hidden");
+            openTable = null;
+        } else {
+            // Đóng bảng đang mở (nếu có) trước khi mở bảng mới
+            if (openTable) {
+                openTable.classList.add("hidden");
+            }
+
+            table.classList.remove("hidden");
+            openTable = table;
+        }
+
+        // Ngăn chặn sự lan truyền của sự kiện click
+        event.stopPropagation();
+    }
+
+    // Ẩn bảng khi click bất kỳ đâu trên màn hình
+    document.addEventListener("click", function () {
+        if (openTable) {
+            openTable.classList.add("hidden");
+            openTable = null;
+        }
+    });
+</script>
+
+

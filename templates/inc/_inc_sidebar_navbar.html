@@ -1,0 +1,85 @@
+{% load static %}
+<aside id="sidebar"
+       class="fixed hidden lg:flex top-0 z-30 flex h-screen flex-col overflow-hidden backdrop-blur sticky h-auto"
+>
+    <!-- LOGO -->
+    <div class="relative mx-2 flex h-[4rem] items-center border-b border-slate-900/10 lg:mx-0 lg:border-0 lg:pl-8">
+        <div class="flex items-center gap-x-2">
+            <span id="sidebar-toggle">
+                <img src="{% static 'images/Logo.ico' %}" alt="" class="h-10 w-10"/>
+            </span>
+            <a href="{% url 'home' %}">
+                <span id="sidebar-logo" class="font-Rancho text-xl font-medium text-gray-900">DevWxs | Blogs</span>
+            </a>
+        </div>
+    </div>
+    <!-- END - LOGO -->
+    <!-- BODY -->
+    <nav class="text-sm font-semibold leading-6 text-slate-700">
+        <ul class="flex flex-col justify-center">
+            <li>
+                <a href="{% url 'blog' %}" class="pl-10 py-2 flex items-center gap-x-4 hover:text-active">
+                    <lord-icon src="https://cdn.lordicon.com/isugonwi.json" trigger="hover"
+                               colors="primary:#121331" class="h-6 w-6"></lord-icon>
+                    <span id="sidebar-blog" class="font-bold">Blog</span>
+                </a>
+            </li>
+            <li>
+                <a href="{% url 'podcast' %}" class="pl-10 py-2 flex items-center gap-x-4 hover:text-active">
+                    <lord-icon src="https://cdn.lordicon.com/xddtsyvc.json" trigger="hover"
+                               colors="primary:#121331" class="h-6 w-6"></lord-icon>
+                    <span id="sidebar-playlist" class="font-bold">Podcast</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <footer class="mb-8 mt-auto flex flex-col justify-center">
+        <ul>
+            {% if request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'profile' request.user.username %}" class="pl-9 py-2 flex items-center gap-x-4 hover:text-active">
+                        <article
+                                class="h-8 w-8 cursor-auto items-center justify-center rounded-full bg-black p-1 transition duration-200 hover:scale-105">
+                            <div class="aspect-w-1 aspect-h-1">
+                                <img
+                                        class="pointer-events-none rounded-full object-cover"
+                                        src="{{ request.user.avatar.url }}"
+                                        alt=""
+                                />
+                            </div>
+                        </article>
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a href="#" class="pl-10 py-2 flex items-center gap-x-4 hover:text-active">
+                    <lord-icon src="https://cdn.lordicon.com/hwuyodym.json" trigger="hover"
+                               colors="primary:#121331" class="h-6 w-6"></lord-icon>
+                    <span id="sidebar-setting" class="font-bold">Cài đặt</span>
+                </a>
+            </li>
+        </ul>
+    </footer>
+    <!-- END - BODY -->
+</aside>
+
+<script>
+    $(document).ready(function () {
+        // Show Sidebar Icon and Title
+        $('#sidebar-blog').hide();
+        $('#sidebar-playlist').hide();
+        $('#sidebar-logo').hide();
+        $('#sidebar-setting').hide();
+        // Hide Sidebar by Default
+        $('#sidebar').addClass('hidden lg:block');
+
+        // Toggle Sidebar on Button Click
+        $('#sidebar-toggle').click(function () {
+            $('#sidebar').toggleClass('min-w-[14rem]');
+            $('#sidebar-blog').toggle();
+            $('#sidebar-playlist').toggle();
+            $('#sidebar-logo').toggle();
+            $('#sidebar-setting').toggle();
+        });
+    });
+</script>

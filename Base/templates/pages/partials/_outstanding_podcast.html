@@ -1,0 +1,50 @@
+{% load static %}
+
+<div class="mb-[18px] flex flex-wrap items-end justify-between gap-x-6">
+    <div>
+        <h2 class="text-xl font-bold capitalize hover:underline">
+            <a href="#">{{ title }}</a>
+        </h2>
+    </div>
+    <a href="{% url 'podcast' %}"
+       class="text-xs font-semibold leading-6 tracking-widest text-[#b3b3b3] hover:underline">{{ href_title }}</a>
+</div>
+<div class="grid grid-cols-5 gap-4">
+    <!-- BÀI VIẾT -->
+    {% for outstanding in outstanding_podcasts %}
+        <figure v-for="image in images" class="py-2 [break-inside:avoid]" title="{{ outstanding.title|safe }}">
+            <div class="hover:bg-active/10 group relative flex flex-col gap-y-2 rounded-2xl bg-white p-4 drop-shadow-[0_0px_15px_rgba(0,0,0,0.04)] transition duration-200">
+                <!-- Image -->
+                <div class="group relative overflow-hidden rounded-xl">
+                    <!-- Image -->
+                    <div class="aspect-square">
+                        <img class="object-cover object-center w-full h-full pointer-events-none group-hover:scale-105 transition duration-200"
+                             src="{{ outstanding.image.url }}"
+                             alt=""/>
+                    </div>
+
+                    <!-- Type -->
+                    <div class="absolute left-4 top-4 flex items-center gap-x-1">
+                        <span class="text-active rounded-md bg-white/90 px-2 py-1 text-xs font-semibold"> {{ outstanding.get_type_display }} </span>
+                        <img class="h-3.5 w-3.5 text-red-500" src="{% static 'icons/music.svg' %}" alt=""/>
+                    </div>
+                    <!-- Button -->
+                    <a href="{% url 'podcast-detail' outstanding.slug %}"
+                            class="bg-active/50 hover:bg-active/90 absolute bottom-4 right-4 flex h-10 w-10 translate-y-3 cursor-auto items-center justify-center rounded-full opacity-0 shadow-xl duration-200 hover:scale-105 group-hover:translate-y-0 group-hover:opacity-100"
+                    >
+                        <img class="h-4 w-4" src="{% static 'icons/play.svg' %}" alt=""/>
+                    </a>
+                </div>
+                <!-- Content -->
+                <p class="text-md font-Poppins font-bold text-gray-700 truncate">{{ outstanding.title|safe }}</p>
+                <!-- User -->
+                <a href="{% url 'profile' outstanding.user.username %}" class="flex items-center gap-x-2">
+                    <span class="font-Poppins cursor-pointer text-sm font-semibold text-gray-700 hover:underline">{{ outstanding.user.artist }}</span>
+                    <img class="h-4 w-4" src="{% static 'icons/verified-account.svg' %}" alt=""/>
+                </a>
+            </div>
+        </figure>
+    {% endfor %}
+
+    <!-- END BÀI VIẾT -->
+</div>

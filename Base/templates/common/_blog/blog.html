@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} DevWxs | Blogs {% endblock %}
+{% block ingredient %}
+    <div class="flex w-full justify-between">
+        <!-- BLOGS -->
+        <section class="flex w-full justify-center">
+            <div class="flex w-full flex-col space-y-8 sm:w-[30rem] md:w-[30rem] lg:w-[30rem] xl:w-[30rem]">
+                <!-- CARD POST -->
+                {% include 'common/components/_blogs.html' %}
+                <!-- END - CARD POST -->
+            </div>
+        </section>
+        <!-- END - POST -->
+    </div>
+{% endblock %}

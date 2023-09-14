@@ -1,0 +1,29 @@
+{% load static %}
+<h1 class="text-md font-bold text-gray-700 ">{{ title }}</h1>
+{% if user.short_bio %}
+    <div class="w-full h-auto flex items-center justify-start">
+        <p class="text-sm font-normal text-gray-700">{{ user.short_bio }}</p>
+    </div>
+{% endif %}
+<div class="w-full h-auto flex items-center gap-x-1.5">
+    {% if user.gender == '0' %}
+        <img class="w-4 h-4" src="{% static 'icons/male.svg' %}" alt=""/>
+    {% elif user.gender == '1' %}
+        <img class="w-4 h-4" src="{% static 'icons/female.svg' %}" alt=""/>
+    {% else %}
+        <img class="w-4 h-4" src="{% static 'icons/gender.svg' %}" alt=""/>
+    {% endif %}
+    <p class="text-sm font-normal text-gray-700">{{ user.get_gender }}</p>
+</div>
+{% if user.phone %}
+    <div class="w-full h-auto flex items-center gap-x-1.5">
+        <img class="w-4 h-4" src="{% static 'icons/phone.svg' %}" alt=""/>
+        <p class="text-sm font-normal text-gray-700">{{ user.phone }}</p>
+    </div>
+{% endif %}
+{% if user.address %}
+    <div class="w-full h-auto flex items-center gap-x-1.5">
+        <img class="w-4 h-4" src="{% static 'icons/address.svg' %}" alt=""/>
+        <p class="text-sm font-normal text-gray-700">{{ user.address }}</p>
+    </div>
+{% endif %}

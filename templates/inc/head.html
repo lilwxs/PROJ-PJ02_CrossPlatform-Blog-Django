@@ -1,0 +1,47 @@
+{% load static %}
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!-- Icon -->
+<link rel="icon" href="{% static 'images/Logo.ico' %}"/>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=Rancho:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
+<!-- Script -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+<script src="https://cdn.lordicon.com/bhenfmcm.js"></script>
+<script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    clifford: '#da373d',
+                    active: '#BF59EB',
+                },
+            },
+            fontFamily: {
+                Rancho: ['Rancho', 'sans-serif'],
+                Poppins: ['Poppins', 'sans-serif'],
+            },
+        },
+    };
+</script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<style>
+    ::-webkit-scrollbar {
+        display: none;
+    }
+</style>
+<style type="text/tailwindcss">
+    @layer untilities {
+        .line-clamp-3 {
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+</style>

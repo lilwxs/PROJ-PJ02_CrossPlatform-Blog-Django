@@ -1,0 +1,24 @@
+{% load static %}
+
+{% for reply in comment.replies.all %}
+    <div class="flex w-full h-auto space-x-2">
+        <img
+                src="{{ reply.user.avatar.url }}"
+                alt=""
+                class="h-8 w-8 rounded-full"
+        />
+        <div class="w-full h-auto flex flex-col items-start">
+            <div class="w-full h-auto flex items-center">
+                <div class="flex flex-col rounded-2xl bg-slate-50 p-2 text-sm">
+                    <span class="block font-semibold">{{ reply.user.get_full_name }}</span>
+                    <p>{{ reply.content }}</p>
+                </div>
+            </div>
+            <div class="mx-2 text-xs text-gray-500">
+                <span class="cursor-pointer font-semibold">Thích</span>
+                <span>&CenterDot;</span>
+                {{ reply.created_at }}
+            </div>
+        </div>
+    </div>
+{% endfor %}

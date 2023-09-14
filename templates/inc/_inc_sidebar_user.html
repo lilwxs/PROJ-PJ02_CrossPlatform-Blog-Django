@@ -1,0 +1,37 @@
+{% load static %}
+<aside class="fixed hidden lg:flex top-0 z-30 flex h-screen flex-col overflow-hidden backdrop-blur sticky h-auto">
+    <!-- View all -->
+    <div class="relative mx-2 flex h-[4rem] items-center border-b border-slate-900/10 lg:mx-0 lg:border-0 lg:pr-8">
+        <a href="#" class="flex items-center max-w-[2rem] gap-x-2">
+            <p class="text-xs font-normal text-center text-active hover:underline">Xem tất cả</p>
+        </a>
+    </div>
+    <!-- END - View all -->
+    <!-- BODY -->
+    <nav class="text-sm font-semibold leading-6 text-slate-700">
+        <ul class="flex flex-col gap-y-4 justify-center">
+            {% for user in users %}
+                <li>
+                    <a href="{% url 'profile' user.username %}" class="flex pr-8 items-center justify-center"
+                       title="{{ user.get_full_name }}">
+                        <div class="relative">
+                            <article class="h-9 w-9 cursor-auto items-center justify-center rounded-full bg-active p-1">
+                                <div class="aspect-w-1 aspect-h-1">
+                                    <img
+                                            class="pointer-events-none rounded-full object-cover"
+                                            src="{{ user.avatar.url }}"
+                                            alt=""
+                                    />
+                                </div>
+                            </article>
+                            {% if user.is_status %}
+                                <span class=" absolute bottom-0.5 right-0.5 h-2 w-2 rounded-full bg-green-500"></span>
+                            {% endif %}
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+    <!-- END - BODY -->
+</aside>

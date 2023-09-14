@@ -1,0 +1,13 @@
+<div class="flex items-center justify-center pt-4">
+    <a class="ml-2 hidden items-center rounded-full bg-indigo-400/10 px-3 py-1 text-xs font-medium leading-5 text-indigo-600 hover:bg-indigo-400/20 md:flex"
+       href="{% url 'home' %}">
+        <span class="lg:block">Tất cả</span>
+    </a>
+    {% for category in categories %}
+            <a class="ml-2 hidden items-center rounded-full bg-indigo-400/10 px-3 py-1 text-xs font-medium leading-5 text-indigo-600 hover:bg-indigo-400/20 md:flex"
+               href="{% url 'home' %}?category={{ category.name }}">
+                <span class="lg:block">{{ category.name }}</span>
+            </a>
+    {% endfor %}
+
+</div>

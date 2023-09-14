@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}DevWxs | Blogs{% endblock %}
+{% block ingredient %}
+    {% include 'features/_blog/_blog_update.html' %}
+    <div class="flex flex-col w-full h-full gap-4">
+        <!-- IMAGE -->
+        <div class="group w-full sm:h-[30rem] h-[20rem]">
+            <div class="relative bg-white/50 overflow-hidden flex items-center justify-center w-full h-full rounded-3xl drop-shadow-[0_0px_15px_rgba(0,0,0,0.04)] border-y">
+                <img class="max-h-full max-w-full object-contain pointer-events-none group-hover:scale-105 transition duration-200"
+                     src="{{ blogs.image.url }}"
+                     alt=""/>
+            </div>
+        </div>
+        <div class="w-full flex flex-col lg:flex-row justify-center gap-4">
+            <div class="relative bg-white overflow-hidden flex flex-col items-start justify-start w-full h-full rounded-3xl drop-shadow-[0_0px_15px_rgba(0,0,0,0.04)] border-y">
+                {% include 'common/_blog/partials/_detail.html' %}
+            </div>
+            <div class="relative overflow-hidden flex flex-col items-start justify-start w-full h-full lg:w-[40rem] xl:w-[40rem]">
+                {% include 'common/_blog/partials/_suggest.html' with title="Gợi ý" %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,202 @@
+{% load static %}
+<!-- CARD POST -->
+{% for blog in blogs %}
+    <div class="flex flex-col gap-y-3 rounded-3xl bg-white p-6 drop-shadow-[0_0px_15px_rgba(0,0,0,0.04)]">
+        <header class="flex max-w-full items-center gap-x-4">
+            <div class="relative cursor-pointer">
+                <article class="w-11 h-11">
+                    <img src="{{ blog.user.avatar.url }}" alt=""
+                         class="w-11 h-11 object-cover object-center rounded-2xl"/>
+                </article>
+                {% if blog.user.is_status == True %}
+                    <div class="absolute -right-0.5 -bottom-0.5 h-3 w-3 bg-green-500/80 rounded-full border-2  border-white"></div>
+                {% endif %}
+            </div>
+            <div class="flex w-full flex-col">
+                <div class="flex w-full items-center justify-between">
+                    <a href="#" class="flex items-center gap-x-2">
+                        <span class="text-md cursor-pointer font-Poppins font-bold text-gray-700">{{ blog.user.last_name }} {{ blog.user.first_name }}</span>
+                        {% if blog.user.is_verified == True %}
+                            <img class="w-4 h-4" src="{% static 'icons/verified-account.svg' %}"
+                                 alt=""/>
+                        {% endif %}
+                    </a>
+                    <div class="flex items-center gap-x-6">
+                        <span class="text-xs font-Poppins font-normal text-slate-400">{{ blog.created_at|timesince|slice:" "|first }} giờ trước</span>
+                        <img src="{% static 'icons/menu-hor.svg' %}" alt=""
+                             class="h-4 w-4 cursor-pointer"/>
+                    </div>
+                </div>
+                <span class="text-sm font-Poppins font-normal text-slate-400">@{{ blog.user.username }} </span>
+            </div>
+        </header>
+        <main class="text-sm px-4 font-medium text-gray-400">
+            <p class="font-semibold text-active">#{{ blog.title|safe }}</p>
+            {% if blog.content|length > 200 %}
+                <p id="truncated-content-{{ forloop.counter }}">{{ blog.content|safe|truncatechars:200 }}
+                    <span class="cursor-pointer hover:underline text-xs text-red-400 font-Poppins font-semibold"
+                          onclick="toggleContent({{ forloop.counter }})">Xem thêm</span>
+                </p>
+                <p id="full-content-{{ forloop.counter }}" class="hidden">
+                    {{ blog.content|safe }}
+                    <span class="cursor-pointer hover:underline text-xs text-red-400 font-Poppins font-semibold"
+                          onclick="toggleContent({{ forloop.counter }})">Ẩn bớt</span>
+                </p>
+            {% else %}
+                <p>{{ blog.content|safe }}</p>
+            {% endif %}
+        </main>
+        <!-- POST IMAGE -->
+        <a href="{% url 'blog-detail' blog.slug %}" class="[break-inside:avoid]">
+            <div class="group relative overflow-hidden rounded-xl">
+                <img class="object-cover object-center w-full h-full pointer-events-none group-hover:scale-105 transition duration-200"
+                     src="{{ blog.image.url }}"
+                     alt=""/>
+            </div>
+        </a>
+        <!-- END POST IMAGE -->
+        <footer class="flex flex-col gap-y-2">
+            <!-- REACT -->
+            <div class="flex items-center justify-between px-4">
+                <div class="flex gap-x-2 text-xs font-Poppins text-slate-400">
+                    <span>{{ blog.likes.count }} thích</span>
+                    <span>{{ blog.dislikes.count }} không thích</span>
+                </div>
+                <div class="flex gap-x-2 text-xs font-Poppins text-slate-400">
+                    <span>{{ blog.comments.count }} bình luận</span>
+                    <span>{{ blog.viewers.count }} lượt xem</span>
+                </div>
+            </div>
+            <!-- END - REACT -->
+            <!-- ACTION -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2 rounded-full bg-slate-50 px-3 py-1 shadow-sm">
+                    <form method="POST" action="{% url 'reaction' blog.slug %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="reaction" value="like">
+                        <button type="submit"
+                                class="flex cursor-pointer items-center space-x-2 text-gray-500 hover:text-red-500">
+                            <img src="{% static 'icons/like.svg' %}" class="w-4 h-4" alt=""/>
+                            <span class="text-xs font-Poppins font-semibold">Thích</span>
+                        </button>
+                    </form>
+                    <span aria-hidden="true">&VerticalSeparator;</span>
+                    <form method="POST" action="{% url 'reaction' blog.slug %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="reaction" value="dislike">
+                        <button type="submit"
+                                class="flex cursor-pointer items-center space-x-2 text-gray-500 hover:text-red-500">
+                            <img src="{% static 'icons/like.svg' %}" class="w-4 h-4" alt=""/>
+                            <span class="text-xs font-Poppins font-semibold">Không thích</span>
+                        </button>
+                    </form>
+                </div>
+                <div class="flex cursor-pointer items-center space-x-2 text-gray-500 hover:text-red-500">
+                    <img src="{% static 'icons/comment.svg' %}" class="w-4 h-4" alt=""/>
+                    <span class="text-xs font-Poppins font-semibold">Bình luận</span>
+                </div>
+                <div class="flex cursor-pointer items-center space-x-2 text-gray-500 hover:text-red-500">
+                    <img src="{% static 'icons/share.svg' %}" class="w-4 h-4" alt=""/>
+                    <span class="text-xs font-Poppins font-semibold">Chia sẻ</span>
+                </div>
+            </div>
+            <!-- END - ACTION -->
+        </footer>
+        <!-- FORM COMMENT -->
+        {#        <form method="POST" action="#">#}
+        {#            {% csrf_token %}#}
+        {#            <div class="relative flex items-center gap-x-3">#}
+        {#                <div class="cursor-pointer">#}
+        {#                    <article#}
+        {#                            class="flex h-10 w-10 items-center justify-center rounded-2xl text-slate-600 shadow-sm ring-1 ring-slate-900/10 backdrop-blur hover:bg-slate-100/80">#}
+        {#                        <span class="text-lg font-Poppins font-bold">N</span>#}
+        {#                    </article>#}
+        {#                    <!-- <img src="https://images.unsplash.com/photo-1681913781129-22837cab0e06?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60" alt="N" class="w-12 h-12 object-cover object-center rounded-full"/> -->#}
+        {#                </div>#}
+        {#                <div class="w-full mr-2">#}
+        {#                    <label class="cursor-pointer w-full flex items-center gap-x-2 items-center rounded-2xl px-4 h-10 text-sm font-medium leading-5 text-slate-800 ring-1 ring-slate-900/10 backdrop-blur hover:bg-slate-100/80">#}
+        {#                        <lord-icon#}
+        {#                                src="https://cdn.lordicon.com/hpivxauj.json"#}
+        {#                                trigger="hover"#}
+        {#                                colors="primary:#121331"#}
+        {#                                class="w-5 h-5">#}
+        {#                        </lord-icon>#}
+        {#                        <input class="w-full bg-transparent placeholder:text-gray-400 focus:outline-none"#}
+        {#                               name="content"#}
+        {#                               placeholder="Viết bình luận ..."/>#}
+        {#                    </label>#}
+        {#                </div>#}
+        {#                <div class="absolute -right-11">#}
+        {#                    <button type="submit"#}
+        {#                            class="flex cursor-pointer h-10 w-10 items-center justify-center rounded-2xl shadow-sm bg-red-500 hover:bg-red-600/80">#}
+        {#                        <img src="{% static 'icons/sent.svg' %}" class="w-5 h-5" alt=""/>#}
+        {#                    </button>#}
+        {#                    <!-- <img src="https://images.unsplash.com/photo-1681913781129-22837cab0e06?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60" alt="N" class="w-12 h-12 object-cover object-center rounded-full"/> -->#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </form>#}
+        <!-- END - FORM COMMENT -->
+        <!-- COMMENT -->
+        {#        {% for c in comments %}#}
+        {#            {% if c.blog == blog %}#}
+        {#                <div class="flex space-x-2">#}
+        {#                    <img#}
+        {#                            src="{{ c.user.avatar.url }}"#}
+        {#                            alt=""#}
+        {#                            class="h-8 w-8 rounded-full"#}
+        {#                    />#}
+        {#                    <div class="group flex flex-col items-start">#}
+        {#                        <div class="gap-x-2 flex items-center">#}
+        {#                            <div class="rounded-2xl bg-slate-50 p-2 text-sm">#}
+        {#                                <span class="block font-semibold">{{ c.user.last_name }} {{ c.user.first_name }}</span>#}
+        {#                                <span>{{ c.content }}</span>#}
+        {#                            </div>#}
+        {#                            <div class="relative h-20 w-20 flex items-center">#}
+        {#                                <div class="hidden cursor-pointer group-hover:inline-block">#}
+        {#                                    {% if request.session.user.id == c.user.id %}#}
+        {#                                        <form method="POST"#}
+        {#                                              action="{% url 'comment-delete' blog.slug %}">#}
+        {#                                            {% csrf_token %}#}
+        {#                                    <input type="hidden" name="comment_id" value="{{ c.id }}">#}
+        {#                                            <button type="submit">#}
+        {#                                                <img src="{% static 'icons/delete.svg' %}"#}
+        {#                                                     class="h-4 w-4"#}
+        {#                                                     alt=""/>#}
+        {#                                            </button>#}
+        {#                                        </form>#}
+        {#                                    {% endif %}#}
+        {#                                </div>#}
+        {#                            </div>#}
+        {#                        </div>#}
+        {#                        <div class="mx-2 text-xs text-gray-500">#}
+        {#                            <span class="cursor-pointer font-semibold">Like</span>#}
+        {#                            <span>.</span>#}
+        {#                            <button onclick="document.getElementById('reply-form-{{ c.id }}').style.display = 'block'"#}
+        {#                                    class="font-semibold">Reply#}
+        {#                            </button>#}
+        {#                            <span>.</span>#}
+        {#                            {{ c.created_at }}#}
+        {#                        </div>#}
+        {#                    </div>#}
+        {#                </div>#}
+        {##}
+        {#            {% endif %}#}
+        {#        {% endfor %}#}
+        <!-- END - COMMENT -->
+    </div>
+{% endfor %}
+<!-- END - CARD POST -->
+<script>
+    function toggleContent(cardId) {
+        let truncatedContent = document.getElementById("truncated-content-" + cardId);
+        let fullContent = document.getElementById("full-content-" + cardId);
+
+        if (truncatedContent.classList.contains("hidden")) {
+            truncatedContent.classList.remove("hidden");
+            fullContent.classList.add("hidden");
+        } else {
+            truncatedContent.classList.add("hidden");
+            fullContent.classList.remove("hidden");
+        }
+    }
+</script>

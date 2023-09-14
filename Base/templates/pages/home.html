@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} DevWxs | Blogs {% endblock %}
+{% block ingredient %}
+    <div class="flex flex-col gap-y-4">
+        <!-- LIST BLOG & PODCAST -->
+        <div class="space-y-4 bg-white rounded-2xl p-8">
+            {% include 'pages/partials/_outstanding_podcast.html' with href="#" title="Những Podcast nổi bật" href="podcast" href_title="Xem tất cả" %}
+            {% include 'pages/partials/_outstanding_blog.html' with href="#" title="Những Blog nổi bật" href_title="Xem tất cả" %}
+
+            <!-- DANH MỤC -->
+            {% include 'pages/partials/category.html' %}
+            <!-- LIST ALL BÀI VIẾT -->
+            {% include 'pages/partials/_show_all.html' %}
+        </div>
+
+    </div>
+{% endblock %}

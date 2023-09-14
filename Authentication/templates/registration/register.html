@@ -1,0 +1,40 @@
+{% extends '_auth_base.html' %}
+{% load static %}
+{% block title %}DevWxs | Blogs{% endblock %}
+{% block ingredient %}
+    <div class="fixed left-0 top-0 z-[1055] h-full w-full overflow-y-auto overflow-x-hidden outline-none bg-slate-50">
+        <div class="flex items-center pointer-events-none relative h-[calc(100%-1rem)] w-auto transition-all duration-300 ease-in-out min-[576px]:mx-auto min-[576px]:mt-7 min-[576px]:h-[calc(100%-3.5rem)] min-[576px]:max-w-[500px]">
+            <div class="pointer-events-auto relative flex max-h-[100%] w-full flex-col overflow-hidden rounded-xl border-none bg-white bg-clip-padding text-current shadow-lg">
+                <header class="flex flex-col items-start border-b-2 border-neutral-100 border-opacity-100 p-4">
+                    <h2 class="text-base font-semibold leading-7 text-gray-900">Tạo tài khoản mới</h2>
+                    <p class="mt-1 text-sm leading-6 text-gray-600">Hãy trải nghiệm theo cách của bạn với DevWxs |
+                        Blogs.</p>
+                </header>
+                <form action="{% url 'register' %}" method="POST"
+                      class="flex max-h-[100%] w-full flex-col overflow-hidden">
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
+                    {% include '_error.html' %}
+                    <main class="flex flex-col overflow-y-auto p-4">
+                        <div class="space-y-8">
+                            <div class="mt-4 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-6">
+                                <!-- Form -->
+                                {% include '_form_snippets.html' with first_name='firts_name' last_name='last_name' username='username' gender='gender' email='email' birthday='birthday' password='password' confirm_password='confirm_password' %}
+                                <!-- End - Form -->
+                            </div>
+                        </div>
+                    </main>
+                    <footer class="flex justify-end gap-x-4 w-full border-t-2 border-neutral-100 border-opacity-100 px-4 py-2">
+                        <a href="{% url 'login' %}" class="flex items-center" title="Đã có tài khoản! Đăng nhập ngay">
+                            <lord-icon src="https://cdn.lordicon.com/dnmvmpfk.json" trigger="hover"
+                                       class="h-5 w-5"></lord-icon>
+                        </a>
+                        <button type="submit" class="rounded-xl bg-slate-100 px-4 py-2 hover:bg-slate-200">
+                            <h1 class="font-semibold text-slate-800">Đăng ký tài khoản</h1>
+                        </button>
+                    </footer>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

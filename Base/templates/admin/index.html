@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    {% include 'inc/head.html' %}
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    {% include 'inc/inc-header-compact.html' %}
+    {% block content %}{% endblock %}
+</body>
+</html>
